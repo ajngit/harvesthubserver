@@ -38,7 +38,7 @@ app.post("/user", (req, res) => {
 
 app.get("*", (req, res) => {
 
-    res.send("404");
+    res.send("Server Running Successfully");
 });
 
 const PORT = process.env.PORT || 3001;
