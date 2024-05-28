@@ -1,48 +1,71 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
+// const express = require("express");
+// const cors = require("cors");
+// const app = express();
+// const sql = require("mssql/msnodesqlv8");
+
+// // config with ssms
+// var config = {
+//     server: "LAPTOP-MBNNNHC8\\MSSQLSERVER01",
+//     database: "Test",
+//     driver: "msnodesqlv8",
+//     options: {
+//         trustedConnection: true
+//      }
+//     //,
+//     // authentication: {
+//     //     type: "default",
+//     //     options: {
+//     //         userName: "",
+//     //         password: ""
+//     //     }
+//     // }
+// }
+
+// //const connectionString ="Server=LAPTOP-MBNNNHC8\\MSSQLSERVER01;Database=Test;Trusted_Connection=True;"
+// const query ="select * from users";
 
 
-app.use(cors({
-    origin:"http://localhost:4200",
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// sql.connect(config, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else { 
+//         var request = new sql.Request();
+//         request.query(query, function (err, records) {
+//             if (err) {
+//                 console.log(err); 
+//             } else {
+//                 const userData = records.recordset; // Changed here
+//                 console.log(userData); // Logs fetched user data
+//                 // Define route handler here to have access to userData
+//                 app.get("/user", (req, res) => { 
+//                     const UserID = parseInt(req.query.id);
 
-//const http = require("http");
+//                     if (UserID) {
+//                         const filteredData = userData.find(data => data.id === UserID); // Changed here
+//                         if (filteredData) {
+//                             res.json(filteredData); 
+//                         } else {
+//                             res.status(404).json({ error: "User not found" });
+//                         }
+//                     } else {
+//                         res.json(userData);
+//                     }
+//                 });
+//             }
+//         })
+//     }
+// })
 
+// app.use(cors({
+//     origin: ["http://localhost:4200","http://localhost:1433"],
+// }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
-const userData = [{
-    id: 1,
-    user: "biju"
-},
-{
-    id: 2,
-    user: "binu"
-}
-];
+// app.get("", (req, res) => {
+//     res.send("Server Running Successfully");
+// });
 
-app.post("/user", (req, res) => {
-    const UserID =parseInt(req.query.id);
+// const PORT = process.env.PORT || 3001;
 
-    if(UserID){
-        const FilteredData = userData.filter((data) => { if(data.id === UserID){
-            res.json(data);
-        } });
-    }else{
-        res.json(userData);
-    }
-    
-});
-
-
-app.get("*", (req, res) => {
-
-    res.send("Server Running Successfully");
-});
-
-const PORT = process.env.PORT || 3001;
-
-app.listen(PORT);
-
-
+// app.listen(PORT);
