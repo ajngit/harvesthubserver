@@ -1,4 +1,3 @@
-// controllers/userController.js
 const userService = require("../Services/userService");
 
 async function getUser(req, res) {
@@ -21,6 +20,19 @@ async function getUser(req, res) {
     }
 }
 
+async function saveUser(req, res) {
+    try {
+        
+        const user = req.body; // Extract user data from request body
+       
+        const resp =await userService.saveUser(user); // Call the service to save the user data
+        
+        
+        res.status(201).json(resp);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 module.exports = {
-    getUser
+    getUser,saveUser
 };
