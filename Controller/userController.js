@@ -3,17 +3,17 @@ const userService = require("../Services/userService");
 async function getUser(req, res) {
     try {
         const users = await userService.getUsers();
-        const userId = parseInt(req.query.id);
+        const userId = parseInt(req.query.UserID);
         
         if (userId) {
-            const user = users.find(user => user.id === userId);
+            const user = users.find(user => user.UserID === userId);
             if (user) {
                 res.json(user);
             } else {
                 res.status(404).json({ error: "User not found" });
             }
         } else {
-            res.json(users);
+            res.json({ error: "UserID not provided" });
         }
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -33,6 +33,20 @@ async function saveUser(req, res) {
         res.status(500).json({ error: err.message });
     }
 }
+
+async function AuthenticateUser(req, res) {
+    try {
+        
+        const user = req.body; // Extract user data from request body
+       
+        const resp =await userService.AuthenticateUser(user); // Call the service to save the user data
+        
+        
+        res.status(201).json(resp);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 module.exports = {
-    getUser,saveUser
+    getUser,saveUser,AuthenticateUser
 };

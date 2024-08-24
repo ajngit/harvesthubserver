@@ -15,7 +15,6 @@ async function getUsers() {
 
 async function saveUser(user) {
     try {
-        console.log('fcyf',user);
         
         const { UserName, UserID, Email, Password, ConfirmPassword, Role, IsActive } = user;
         await sql.connect(dbConfig);
@@ -49,6 +48,40 @@ async function saveUser(user) {
     }
 }
 
+
+async function AuthenticateUser(user) {
+    try {
+        
+        const {  Email, Password } = user;
+
+        await sql.connect(dbConfig);
+
+        const request = new sql.Request();
+        
+        request.input('Email', sql.NVarChar, Email);
+        request.input('Password', sql.NVarChar, Password);
+ 
+        const result = await request.execute('AuthenticateUser');
+
+        const Resp = new SaveResponse();
+
+        if(result.recordset.length>0){
+            Resp.Status ='success';
+            Resp.Saved =true;
+        }else{
+            Resp.Status ='failed';
+            Resp.Saved =false;
+        }
+
+        console.log(Resp);
+         
+        return Resp;
+
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    getUsers, saveUser
+    getUsers, saveUser, AuthenticateUser
 };
