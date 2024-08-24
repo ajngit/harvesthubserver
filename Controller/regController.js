@@ -1,0 +1,17 @@
+const regService = require("../Services/regService");
+
+async function SaveRegistration(req, res) {
+    try {
+            const regData = req.body; 
+       
+            const resp =await regService.SaveRegistration(regData); 
+            res.status(201).json(resp);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+}
+
+
+module.exports = {
+    SaveRegistration
+};
