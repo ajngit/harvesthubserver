@@ -6,7 +6,7 @@ const SaveResponse = require("../Shared/SaveResponse");
 async function getUsers() {
     try {
         await sql.connect(dbConfig);
-        const result = await sql.query("SELECT * FROM Users");
+        const result = await sql.query("SELECT * FROM Users_NotDeleted");
         return result.recordset;
     } catch (err) {
         throw new Error(err.message);
