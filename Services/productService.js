@@ -27,7 +27,37 @@ async function getProductByProductID(ProductID) {
     }
 }
 
+async function getProductByProductRegID(ProductRegID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('ProductRegID', sql.Int, ProductRegID);
+        console.log(ProductRegID);
+        
+        const result = await request.execute("GetRegistrationByProductRegID");
+        console.log(result);
+        
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+async function getCart(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('UserID', sql.Int, UserID);
+        console.log(UserID);
+        
+        const result = await request.execute("GetCart");
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    getProducts,getProductByProductID
+    getProducts,getProductByProductID,getProductByProductRegID,getCart
     //, saveUser, AuthenticateUser
 };

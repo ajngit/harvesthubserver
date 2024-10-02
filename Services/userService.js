@@ -60,6 +60,8 @@ async function AuthenticateUser(user) {
         
         request.input('Email', sql.NVarChar, Email);
         request.input('Password', sql.NVarChar, Password);
+        const Response ='';
+        request.output('Response',sql.NVarChar,Response);
  
         const result = await request.execute('AuthenticateUser');
 
@@ -68,6 +70,7 @@ async function AuthenticateUser(user) {
         if(result.recordset.length>0){
             Resp.Status ='success';
             Resp.Saved =true;
+            Resp.ID =result.output.Response;
         }else{
             Resp.Status ='failed';
             Resp.Saved =false;

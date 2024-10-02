@@ -13,7 +13,33 @@ async function SaveRegistration(req, res) {
         }
 }
 
+async function SaveCustomer(req, res) {
+    try {
+            const regData = req.body; 
+       
+            const resp =await regService.SaveCustomer(regData); 
+            res.status(201).json(resp);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+            console.log(err.message);
+            
+        }
+}
+
+async function SaveOrder(req, res) {
+    try {
+            const regData = req.body; 
+       
+            const resp =await regService.SaveOrder(regData); 
+            res.status(201).json(resp);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+            console.log(err.message);
+            
+        }
+}
+
 
 module.exports = {
-    SaveRegistration
+    SaveRegistration,SaveCustomer,SaveOrder
 };
