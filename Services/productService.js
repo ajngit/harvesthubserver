@@ -57,7 +57,21 @@ async function getCart(UserID) {
     }
 }
 
+async function getCustomerInfo(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('UserID', sql.Int, UserID);
+        console.log(UserID);
+        
+        const result = await request.execute("GetContactInfo");
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    getProducts,getProductByProductID,getProductByProductRegID,getCart
+    getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo
     //, saveUser, AuthenticateUser
 };
