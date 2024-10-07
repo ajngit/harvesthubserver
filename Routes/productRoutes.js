@@ -13,6 +13,7 @@ router.get("/getcart", productController.getCart);
 
 router.get("/getcustomerinfo", productController.getCustomerInfo);
 
+router.get("/getorderinfo", productController.getOrderInfo);
 // router.post("/saveproduct", productController.AuthenticateUser);
 
 // router.post("/deleteproduct", productController.AuthenticateUser);
