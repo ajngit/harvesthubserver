@@ -39,7 +39,19 @@ async function SaveOrder(req, res) {
         }
 }
 
+async function SaveProduct(req, res) {
+    try {
+            const regData = req.body;
+       
+            const resp =await regService.SaveProduct(regData);
+            res.status(201).json(resp);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+            console.log(err.message);
+           
+        }
+}
 
 module.exports = {
-    SaveRegistration,SaveCustomer,SaveOrder
+    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct
 };

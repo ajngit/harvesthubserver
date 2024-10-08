@@ -138,6 +138,55 @@ async function SaveOrder(regData) {
     }
 }
 
+async function SaveProduct(Data) {
+    try {
+       
+        const {  
+             ProductID,
+ProductName,
+Description ,
+ProductType ,
+Price       ,
+TotalQuantity ,
+ImageURL    ,
+ModifiedUser
+        } = Data;
+        await sql.connect(dbConfig);
+
+        console.log(Data);
+       
+
+         
+        const request = new sql.Request();
+        const Response ='';
+         request.input('ProductID', sql.Int, ProductID);
+request.input('ProductName', sql.NVarChar, ProductName);
+request.input('Description', sql.NVarChar, Description);
+request.input('ProductType', sql.NVarChar, ProductType);
+         request.input('Price', sql.Decimal, Price);
+request.input('TotalQuantity', sql.Int, TotalQuantity);
+         request.input('ImageURL', sql.NVarChar, ImageURL);
+         request.input('ModifiedUser', sql.Int, ModifiedUser);
+         request.output('Response',sql.NVarChar,Response);
+ 
+         
+         const result = await request.execute('SaveProduct');
+
+         const Resp = new SaveResponse();
+         Resp.ID =result.output.Response;
+         Resp.Status ='success';
+         Resp.Saved =true;
+         // Return the result from the stored procedure
+         console.log(Resp.ID);
+         
+         return Resp;
+    } catch (err) {
+        console.log(err.message);
+       
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    SaveRegistration,SaveCustomer,SaveOrder
+    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct
 };

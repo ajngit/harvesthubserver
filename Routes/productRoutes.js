@@ -14,6 +14,8 @@ router.get("/getcart", productController.getCart);
 router.get("/getcustomerinfo", productController.getCustomerInfo);
 
 router.get("/getorderinfo", productController.getOrderInfo);
+
+router.get("/getorders", productController.getOrderList);
 // router.post("/saveproduct", productController.AuthenticateUser);
 
 // router.post("/deleteproduct", productController.AuthenticateUser);

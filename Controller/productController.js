@@ -94,7 +94,21 @@ async function getOrderInfo(req, res) {
         res.status(500).json({ error: err.message });
     }
 }
+async function getOrderList(req, res) {
+    try {
+       
+        
+        const OrderList = await productService.getOrderList();
+        if (OrderList) {
+            res.json(OrderList);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 module.exports = {
-    getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo,getOrderInfo
-    //,saveUser,AuthenticateUser
+    getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo,getOrderInfo,getOrderList
 };
