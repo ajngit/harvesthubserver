@@ -52,7 +52,7 @@ async function saveUser(user) {
 async function AuthenticateUser(user) {
     try {
         
-        const {  Email, Password } = user;
+        const {  Email, Password , Role} = user;
 
         await sql.connect(dbConfig);
 
@@ -60,6 +60,7 @@ async function AuthenticateUser(user) {
         
         request.input('Email', sql.NVarChar, Email);
         request.input('Password', sql.NVarChar, Password);
+        request.input('Role', sql.Int, Role);
         const Response ='';
         request.output('Response',sql.NVarChar,Response);
  
