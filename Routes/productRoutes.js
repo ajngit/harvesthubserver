@@ -18,6 +18,10 @@ router.get("/getorderinfo", productController.getOrderInfo);
 router.get("/getorders", productController.getOrderList);
 
 router.get("/getproductsbyuserid", productController.getProductsByUserID);
+
+router.get("/getordersbyuserid", productController.getOrdersByUserID);
+
+router.get("/getordersbyfarmerid", productController.getOrdersByFarmerID);
 // router.post("/saveproduct", productController.AuthenticateUser);
 
 // router.post("/deleteproduct", productController.AuthenticateUser);

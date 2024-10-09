@@ -111,6 +111,34 @@ async function getProductsByUserID(UserID) {
     }
 }
 
+async function getOrdersByUserID(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('UserID', sql.Int, UserID);
+        console.log(UserID);
+       
+        const result = await request.execute("GetOrdersByUserID");     //create sp asap  --for users orders
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+async function getOrdersByFarmerID(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('UserID', sql.Int, UserID);
+        console.log(UserID);
+       
+        const result = await request.execute("getOrdersByFarmerID");     //create sp asap  --for farmers orders
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
     getProducts
     ,getProductByProductID
@@ -120,5 +148,7 @@ module.exports = {
     ,getOrderInfo
     ,getOrderList
     ,getProductsByUserID
+    ,getOrdersByUserID
+    ,getOrdersByFarmerID
  
 };

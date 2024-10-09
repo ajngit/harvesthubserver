@@ -126,7 +126,41 @@ async function getProductsByUserID(req, res) {
     }
 }
 
+
+ 
+async function getOrdersByUserID(req, res) {
+    try {
+       
+        const UserID = parseInt(req.query.UserID);
+        const order = await productService.getOrdersByUserID(UserID);
+        if (order) {
+            res.json(order);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function getOrdersByFarmerID(req, res) {
+    try {
+       
+        const UserID = parseInt(req.query.UserID);
+        const order = await productService.getOrdersByFarmerID(UserID);
+        if (order) {
+            res.json(order);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo,getOrderInfo,getOrderList,
-    getProductsByUserID
+    getProductsByUserID,getOrdersByUserID,getOrdersByFarmerID
 };
