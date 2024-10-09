@@ -109,6 +109,24 @@ async function getOrderList(req, res) {
         res.status(500).json({ error: err.message });
     }
 }
+
+async function getProductsByUserID(req, res) {
+    try {
+       
+        const UserID = parseInt(req.query.UserID);
+        const products = await productService.getProductsByUserID(UserID);
+        if (products) {
+            res.json(products);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
-    getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo,getOrderInfo,getOrderList
+    getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo,getOrderInfo,getOrderList,
+    getProductsByUserID
 };

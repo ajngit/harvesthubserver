@@ -149,6 +149,7 @@ ProductType ,
 Price       ,
 TotalQuantity ,
 ImageURL    ,
+ModifiedDate,
 ModifiedUser
         } = Data;
         await sql.connect(dbConfig);
@@ -159,15 +160,16 @@ ModifiedUser
          
         const request = new sql.Request();
         const Response ='';
-         request.input('ProductID', sql.Int, ProductID);
-request.input('ProductName', sql.NVarChar, ProductName);
-request.input('Description', sql.NVarChar, Description);
-request.input('ProductType', sql.NVarChar, ProductType);
-         request.input('Price', sql.Decimal, Price);
-request.input('TotalQuantity', sql.Int, TotalQuantity);
-         request.input('ImageURL', sql.NVarChar, ImageURL);
-         request.input('ModifiedUser', sql.Int, ModifiedUser);
-         request.output('Response',sql.NVarChar,Response);
+        request.input('ProductID', sql.Int, ProductID);
+        request.input('ProductName', sql.NVarChar, ProductName);
+        request.input('Description', sql.NVarChar, Description);
+        request.input('ProductType', sql.Int, ProductType);
+        request.input('Price', sql.Decimal, Price);
+        request.input('TotalQuantity', sql.Int, TotalQuantity);
+        request.input('ImageURL', sql.NVarChar, ImageURL);
+        // request.input('ModifiedDate', sql.Date, ModifiedDate);
+        request.input('ModifiedUser', sql.Int, ModifiedUser);
+        request.output('Response',sql.NVarChar,Response);
  
          
          const result = await request.execute('SaveProduct');

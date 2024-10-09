@@ -97,6 +97,20 @@ async function getOrderList() {
     }
 }
 
+async function getProductsByUserID(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('UserID', sql.Int, UserID);
+        console.log(UserID);
+       
+        const result = await request.execute("GetProductByUserID");
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
     getProducts
     ,getProductByProductID
@@ -105,5 +119,6 @@ module.exports = {
     ,getCustomerInfo
     ,getOrderInfo
     ,getOrderList
+    ,getProductsByUserID
  
 };
