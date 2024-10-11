@@ -47,6 +47,22 @@ async function AuthenticateUser(req, res) {
         res.status(500).json({ error: err.message });
     }
 }
+
+async function GetUserDetails(req, res) {
+    try {
+       
+        const UserID = parseInt(req.query.UserID);
+        const user = await userService.GetUserDetails(UserID);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 module.exports = {
-    getUser,saveUser,AuthenticateUser
+    getUser,saveUser,AuthenticateUser,GetUserDetails
 };

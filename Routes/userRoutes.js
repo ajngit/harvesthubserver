@@ -7,5 +7,7 @@ router.get("/user", userController.getUser);
 
 router.post("/register", userController.saveUser);
 
-router.post("/login", userController.AuthenticateUser)
+router.post("/login", userController.AuthenticateUser);
+
+router.get("/getuserdetails", userController.GetUserDetails);
 module.exports = router;

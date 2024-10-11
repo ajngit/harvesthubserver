@@ -16,7 +16,7 @@ async function getUsers() {
 async function saveUser(user) {
     try {
         
-        const { UserName, UserID, Email, Password, ConfirmPassword, Role, IsActive } = user;
+        const { UserName, UserID, Email, Password, ConfirmPassword, Role,ImageURL, IsActive } = user;
         await sql.connect(dbConfig);
 
          // Prepare the request for the stored procedure
@@ -27,7 +27,7 @@ async function saveUser(user) {
          request.input('UserID', sql.Int, UserID);
          request.input('Email', sql.NVarChar, Email);
          request.input('Password', sql.NVarChar, Password);
-         //request.input('ConfirmPassword', sql.NVarChar, ConfirmPassword);
+         request.input('ImageURL', sql.NVarChar, ImageURL);
          request.input('Role', sql.NVarChar, Role);
          request.input('IsActive', sql.Bit, IsActive);
          request.output('Response',sql.NVarChar,Response);
@@ -86,6 +86,20 @@ async function AuthenticateUser(user) {
     }
 }
 
+async function GetUserDetails(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('UserID', sql.Int, UserID);
+        console.log(UserID);
+       
+        const result = await request.execute("GetUserDetails");
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    getUsers, saveUser, AuthenticateUser
+    getUsers, saveUser, AuthenticateUser ,GetUserDetails
 };
