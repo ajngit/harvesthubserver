@@ -189,6 +189,73 @@ ModifiedUser
     }
 }
 
+//review
+
+
+async function SaveReview(Review) {
+    try {
+       
+        const {  ReviewID, ProductID, Review, Rating, ModifiedUser } = Review;
+        await sql.connect(dbConfig);
+
+         
+         const request = new sql.Request();
+        const Response ='';
+
+         request.input('ReviewID', sql.Int, ReviewID);
+         request.input('ProductID', sql.Int, ProductID);
+         request.input('Review', sql.NVarChar, Review);
+         request.input('Rating', sql.Int, Rating);
+         request.input('ModifiedUser', sql.Int, ModifiedUser);
+         request.output('Response',sql.Int,Response);
+ 
+         // Execute the stored procedure
+         const result = await request.execute('SaveReview');
+
+         const Resp = new SaveResponse();
+         Resp.ID =result.output.Response;
+         Resp.Status ='success';
+         Resp.Saved =true;
+         // Return the result from the stored procedure
+         console.log(Resp);
+         
+         return Resp;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+async function GetReviews(ProductID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+        request.input('ProductID', sql.Int, ProductID);
+        console.log(ProductID);
+       
+        const result = await request.execute("GetReviews");
+        return result.recordset;
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+async function DeleteReview(ReviewID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+
+        request.input('ReviewID', sql.Int, ReviewID);
+const Response ='';
+        request.output('Response',sql.NVarChar,Response);
+        const result = await request.execute("DeleteReview");
+return result.output.Response;
+         
+    } catch (err) {
+       
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct
+    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct,DeleteReview,GetReviews,SaveReview
 };

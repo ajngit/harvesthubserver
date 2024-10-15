@@ -100,6 +100,25 @@ async function GetUserDetails(UserID) {
     }
 }
 
+
+async function DeleteUser(UserID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+
+        request.input('UserID', sql.Int, UserID);
+const Response ='';
+        request.output('Response',sql.NVarChar,Response);
+        const result = await request.execute("DeleteUser");
+return result.output.Response;
+         
+    } catch (err) {
+       
+        throw new Error(err.message);
+    }
+}
+
+
 module.exports = {
-    getUsers, saveUser, AuthenticateUser ,GetUserDetails
+    getUsers, saveUser, AuthenticateUser ,GetUserDetails,DeleteUser
 };

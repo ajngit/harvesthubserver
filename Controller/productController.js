@@ -160,7 +160,23 @@ async function getOrdersByFarmerID(req, res) {
     }
 }
 
+async function DeleteProduct(req, res) {
+    try {
+       
+        const ProductID = parseInt(req.query.ProductID);
+        const product = await userService.DeleteUser(ProductID);
+        if (product) {
+            res.json(product);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getProducts,getProductByProductID,getProductByProductRegID,getCart,getCustomerInfo,getOrderInfo,getOrderList,
-    getProductsByUserID,getOrdersByUserID,getOrdersByFarmerID
+    getProductsByUserID,getOrdersByUserID,getOrdersByFarmerID,DeleteProduct
 };

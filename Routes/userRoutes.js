@@ -10,4 +10,7 @@ router.post("/register", userController.saveUser);
 router.post("/login", userController.AuthenticateUser);
 
 router.get("/getuserdetails", userController.GetUserDetails);
+
+router.delete("/deleteuser", userController.DeleteUser);
+
 module.exports = router;

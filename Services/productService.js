@@ -139,6 +139,23 @@ async function getOrdersByFarmerID(UserID) {
     }
 }
 
+async function DeleteProduct(ProductID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+
+        request.input('ProductID', sql.Int, ProductID);
+const Response ='';
+        request.output('Response',sql.NVarChar,Response);
+        const result = await request.execute("DeleteProduct");
+return result.output.Response;
+         
+    } catch (err) {
+       
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
     getProducts
     ,getProductByProductID
@@ -150,5 +167,5 @@ module.exports = {
     ,getProductsByUserID
     ,getOrdersByUserID
     ,getOrdersByFarmerID
- 
+    ,DeleteProduct
 };

@@ -22,6 +22,8 @@ router.get("/getproductsbyuserid", productController.getProductsByUserID);
 router.get("/getordersbyuserid", productController.getOrdersByUserID);
 
 router.get("/getordersbyfarmerid", productController.getOrdersByFarmerID);
+
+router.delete("/deleteproduct", productController.DeleteProduct);
 // router.post("/saveproduct", productController.AuthenticateUser);
 
 // router.post("/deleteproduct", productController.AuthenticateUser);
