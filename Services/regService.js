@@ -192,12 +192,13 @@ ModifiedUser
 //review
 
 
-async function SaveReview(Review) {
+async function SaveReview(Reviews) {
     try {
        
-        const {  ReviewID, ProductID, Review, Rating, ModifiedUser } = Review;
+        const {  ReviewID, ProductID, Review, Rating, ModifiedUser } = Reviews;
         await sql.connect(dbConfig);
 
+         console.log(Reviews);
          
          const request = new sql.Request();
         const Response ='';
@@ -246,9 +247,17 @@ async function DeleteReview(ReviewID) {
 
         request.input('ReviewID', sql.Int, ReviewID);
 const Response ='';
-        request.output('Response',sql.NVarChar,Response);
+        request.output('Response',sql.Int,Response);
         const result = await request.execute("DeleteReview");
-return result.output.Response;
+
+        const Resp = new SaveResponse();
+        Resp.ID =result.output.Response;
+        Resp.Status ='success';
+        Resp.Saved =true;
+        // Return the result from the stored procedure
+        console.log(Resp);
+        
+        return Resp;
          
     } catch (err) {
        
