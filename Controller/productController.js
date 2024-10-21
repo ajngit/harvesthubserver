@@ -164,7 +164,7 @@ async function DeleteProduct(req, res) {
     try {
        
         const ProductID = parseInt(req.query.ProductID);
-        const product = await userService.DeleteUser(ProductID);
+        const product = await productService.DeleteProduct(ProductID);
         if (product) {
             res.json(product);
         } else {

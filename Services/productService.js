@@ -146,7 +146,7 @@ async function DeleteProduct(ProductID) {
 
         request.input('ProductID', sql.Int, ProductID);
 const Response ='';
-        request.output('Response',sql.NVarChar,Response);
+        request.output('Response',sql.Int,Response);
         const result = await request.execute("DeleteProduct");
 return result.output.Response;
          
