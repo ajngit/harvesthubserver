@@ -11,9 +11,11 @@ const app = express();
 app.use(cors({
     origin: ["http://localhost:4200","http://localhost:1433"],
 }));
-app.use(express.json());
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use("/", userRoutes);
 app.use("/", productRoutes);
