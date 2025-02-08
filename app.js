@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-    origin: ["http://localhost:4200","http://localhost:1433"],
+    origin: ["http://localhost:4200","http://localhost:1433","https://harvest-hub-nine.vercel.app"],
 }));
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
