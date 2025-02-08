@@ -1,5 +1,6 @@
 // services/userService.js
-const sql = require("mssql/msnodesqlv8");
+// const sql = require("mssql/msnodesqlv8");
+const sql = require('mssql');
 const dbConfig = require("../dbConfig");
 const SaveResponse = require("../Shared/SaveResponse");
 
