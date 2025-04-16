@@ -26,6 +26,24 @@ async function SaveCustomer(req, res) {
         }
 }
 
+async function saveOrderWithItems(req, res) {
+    try {
+        const orderData = req.body;
+
+        const result = await regService.SaveOrderWithItems(orderData); // You’d have this in your service layer
+
+        if (result.Saved) {
+            res.status(201).json(result);
+        } else {
+            res.status(400).json({ error: 'Order not saved', details: result.Message });
+        }
+    } catch (err) {
+        console.error('Controller Error:', err.message);
+        res.status(500).json({ error: err.message });
+    }
+}
+
+
 async function SaveOrder(req, res) {
     try {
             const regData = req.body; 
@@ -101,7 +119,23 @@ async function DeleteReview(req, res) {
     }
 }
 
+async function DeleteCartItem(req, res) {
+    try {
+       
+        const CartItemID = parseInt(req.query.CartItemID);
+        const result = await regService.DeleteCartItem(CartItemID);
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).json({ error: "Page not found" });
+        }
+       
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 
 module.exports = {
-    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct,DeleteReview,GetReviews,SaveReview
+    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct,DeleteReview,GetReviews,SaveReview,saveOrderWithItems,DeleteCartItem
 };

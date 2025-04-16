@@ -7,7 +7,7 @@ const SaveResponse = require("../Shared/SaveResponse");
 async function SaveRegistration(regData) {
     try {
         
-        const {  ProductRegID, ProductID, Quantity, Discount, GrossTotal, NetTotal,
+        const {  CartItemID, ProductID, Quantity, Discount, GrossTotal, NetTotal,
             ServiceCharge,PaymentCharge,DeliveryCharge,TaxCharge, ModifiedUser} = regData;
         await sql.connect(dbConfig);
 
@@ -18,7 +18,7 @@ async function SaveRegistration(regData) {
          const request = new sql.Request();
         const Response ='';
          // Add parameters to the request
-         request.input('ProductRegID', sql.Int, ProductRegID);
+         request.input('CartItemID', sql.Int, CartItemID);
          request.input('ProductID', sql.Int, ProductID);
          request.input('Quantity', sql.Int, Quantity);
          request.input('Discount', sql.Decimal, Discount);
@@ -29,7 +29,7 @@ async function SaveRegistration(regData) {
          request.input('TaxCharge', sql.Decimal, TaxCharge);
          request.input('DeliveryCharge', sql.Decimal, DeliveryCharge);
          request.input('ModifiedUser', sql.Int, ModifiedUser);
-         request.output('Response',sql.NVarChar,Response);
+         request.output('Response',sql.Int,Response);
  
          // Execute the stored procedure
          const result = await request.execute('SaveRegistration');
@@ -95,6 +95,50 @@ async function SaveCustomer(regData) {
     }
 }
 
+async function SaveOrderWithItems(orderData) {
+    try {
+      await sql.connect(dbConfig);
+  
+      const request = new sql.Request();
+  
+      request.input('UserID', sql.Int, orderData.UserID);
+      request.input('TotalAmount', sql.Decimal(10, 2), orderData.TotalAmount);
+      request.input('DeliveryAddress', sql.VarChar(255), orderData.DeliveryAddress);
+      request.input('CreatedBy', sql.VarChar(100), orderData.CreatedBy);
+  
+      // Construct the table for TVP
+    const tvp = new sql.Table("OrderItemType"); // must match the type name in SQL Server
+    tvp.columns.add("ProductID", sql.Int);
+    tvp.columns.add("Quantity", sql.Decimal(10, 2));
+    tvp.columns.add("Price", sql.Decimal(10, 2));
+
+    const now = new Date();
+
+    orderData.Items.forEach(item => {
+      tvp.rows.add(
+        item.ProductID,
+        item.Quantity,
+        item.Price
+      );
+    });
+
+    request.input("OrderItems", tvp);
+  
+      request.output('Response', sql.NVarChar(50));
+  
+      const result = await request.execute('InsertOrderWithItems'); // stored procedure name
+  
+      return {
+        ID: result.output.Response,
+        Saved: true,
+        Status: 'success',
+      };
+    } catch (err) {
+      console.error('Error in saveOrderWithItems:', err);
+      throw err;
+    }
+  }
+  
 async function SaveOrder(regData) {
     try {
         
@@ -264,6 +308,32 @@ const Response ='';
     }
 }
 
+
+async function DeleteCartItem(CartItemID) {
+    try {
+        await sql.connect(dbConfig);
+        const request = new sql.Request();
+
+        request.input('CartItemID', sql.Int, CartItemID);
+        const Response ='';
+        request.output('Response',sql.VarChar,Response);
+        const result = await request.execute("DeleteCartItem");
+
+        const Resp = new SaveResponse();
+        Resp.ID =result.output.Response;
+        Resp.Status ='success';
+        Resp.Saved =true;
+        // Return the result from the stored procedure
+        console.log(Resp);
+        
+        return Resp;
+         
+    } catch (err) {
+       
+        throw new Error(err.message);
+    }
+}
+
 module.exports = {
-    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct,DeleteReview,GetReviews,SaveReview
+    SaveRegistration,SaveCustomer,SaveOrder,SaveProduct,DeleteReview,GetReviews,SaveReview,SaveOrderWithItems,DeleteCartItem
 };
