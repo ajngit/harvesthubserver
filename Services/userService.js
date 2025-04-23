@@ -27,7 +27,7 @@ async function saveUser(user) {
          request.input('Email', sql.NVarChar, Email);
          request.input('Password', sql.NVarChar, Password);
          request.input('ImageURL', sql.NVarChar, ImageURL);
-         request.input('Role', sql.NVarChar, Role);
+         request.input('Role', sql.Int, Role);
          request.input('IsActive', sql.Bit, IsActive);
          request.output('Response',sql.NVarChar,Response);
  
